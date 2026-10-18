@@ -111,3 +111,12 @@ If this project helps you then you can grab me a coffee or beer to say thanks.
 ---
 
 Copyright © 2017 Karl Saunders | MIT license
+
+### Development tests
+
+Use Node.js 22 or newer. Run `npm ci`, then `npx playwright install chromium`
+(`npx playwright install --with-deps chromium` on a fresh Linux machine), and
+`npm test`. Tests load QUnit locally and execute the existing browser suite in
+Chromium. The library source and distributed JS/CSS do not require Node.js or
+runtime npm dependencies. The retired Grunt/PhantomJS/Sauce Labs stack is no
+longer required; `npm test` also checks JavaScript syntax.
