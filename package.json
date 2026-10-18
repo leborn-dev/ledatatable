@@ -4,7 +4,7 @@
   "description": "A lightweight, dependency-free javascript HTML table plugin.",
   "main": "src/vanilla-dataTables.js",
   "scripts": {
-    "test": "grunt test"
+    "test": "node --check src/vanilla-dataTables.js && node tests/run.cjs"
   },
   "repository": {
     "type": "git",
@@ -22,12 +22,7 @@
   },
   "homepage": "https://github.com/Mobius1/Vanilla-DataTables#readme",
   "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-contrib-qunit": "^1.3.0" ,
-    "qunit": "~0.5.15",
-    "grunt-contrib-jshint": "^1.0.0",
-    "qunitjs": "^2.0.1",
-     "grunt-saucelabs": "~4.0.2",
-     "grunt-contrib-connect": "~0.1.2"
+    "playwright": "^1.64.1",
+    "qunit": "^2.26.0"
   }
 }

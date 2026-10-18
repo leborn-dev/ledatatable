@@ -129,6 +129,37 @@
 	  assert.ok( Object.prototype.toString.call(dt) === '[object Object]', "Passed!" );
 	});	
 	
+	function createTable() {
+	  var table = document.createElement("table");
+	  table.innerHTML = "<thead><tr><th>Name</th></tr></thead>" +
+	    "<tbody><tr><td>Alice</td></tr><tr><td>Bob</td></tr><tr><td>Carol</td></tr></tbody>";
+	  document.getElementById("qunit-fixture").appendChild(table);
+	  return { table: table, instance: new DataTable(table, { perPage: 2 }) };
+	}
+	QUnit.test("pagination renders the remaining rows", function(assert) {
+	  var sample = createTable();
+	  assert.equal(sample.table.tBodies[0].rows.length, 2, "first page has two rows");
+	  sample.instance.page(2);
+	  assert.equal(sample.table.tBodies[0].rows.length, 1, "second page has one row");
+	  assert.ok(sample.table.textContent.indexOf("Carol") >= 0, "remaining record rendered");
+	  sample.instance.destroy();
+	});
+	QUnit.test("search filters and clears the table", function(assert) {
+	  var sample = createTable();
+	  sample.instance.search("Alice");
+	  assert.equal(sample.table.tBodies[0].rows.length, 1, "one matching row");
+	  assert.ok(sample.table.tBodies[0].textContent.indexOf("Alice") >= 0, "matching text shown");
+	  sample.instance.search("");
+	  assert.equal(sample.table.tBodies[0].rows.length, 2, "clearing search restores first page");
+	  sample.instance.destroy();
+	});
+	QUnit.test("destroy restores all source rows", function(assert) {
+	  var sample = createTable();
+	  sample.instance.destroy();
+	  assert.equal(sample.table.tBodies[0].rows.length, 3, "all three records preserved");
+	  assert.notOk(sample.table.closest(".dataTable-wrapper"), "wrapper removed");
+	});
+
 	QUnit.done(function (test_results) {
 	  var tests = [];
 	  for(var i = 0, len = log.length; i < len; i++) {
